@@ -35,8 +35,8 @@ export const signup = async(req, res) => {
       res.cookie("token", jwtToken, {
             httpOnly: true,
             maxAge: 1*24 * 60 * 60 * 1000, // 1 day
-            sameSite: "Strict",
-            secure: false,  // Set to true if using HTTPS
+             sameSite: "None",
+            secure: true,  // Set to true if using HTTPS 
      })
 
 
@@ -82,8 +82,8 @@ export const login=async(req, res) => {
       res.cookie("token", jwtToken, {
             httpOnly: true,
             maxAge: 1*24 * 60 * 60 * 1000, // 1 day
-            sameSite: "Strict",
-            secure: false,  // Set to true if using HTTPS
+             sameSite: "None",
+            secure: true,  // Set to true if using HTTPS 
      })
 
     res.status(200).json({
@@ -128,7 +128,11 @@ export const CurrentUser=async(req,res)=>{
 
 export const logout = (req, res) => {
     try {
-        res.clearCookie('token');
+           res.clearCookie("token", {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+        });
         res.status(200).json({
             success: true,
             message: "User logged out successfully"
