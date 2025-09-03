@@ -57,7 +57,7 @@ export const editDoc = async (req, res) => {
     const doc = await DocModel.findById(id);
 
     if (
-      user.role !== "admin" &&
+       !user.role.includes("admin") &&
       user._id.toString() !== doc.createdBy.toString()
     ) {
       return res
@@ -93,7 +93,7 @@ export const editDoc = async (req, res) => {
 
     res
       .status(200)
-      .json({ message: "Document updated successfully", updatedDoc: doc });
+      .json({ message: "Document updated successfully",  doc });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "error while updating document" });
@@ -106,7 +106,7 @@ export const deleteDoc = async (req, res) => {
     const user = await UserModel.findById(req.user._id);
     const doc = await DocModel.findById(id);
 
-    if (user.role !== "admin" && user._id.toString() !== doc.createdBy.toString()) {
+    if (!user.role.includes("admin") && user._id.toString() !== doc.createdBy.toString()) {
       return res
         .status(403)
         .json({ message: "You are not authorized to delete this document" });

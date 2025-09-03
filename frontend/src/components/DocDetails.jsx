@@ -62,7 +62,7 @@ export default function DocDetails() {
     setIsUpdating(true);
     try {
       const res = await axios.put(
-        `${serverUrl}/api/docs/editDoc/${id}`, // ✅ check backend
+        `${serverUrl}/api/docs/editDoc/${id}`, //  check backend
         { title: editForm.title, content: editForm.content },
         { withCredentials: true }
       );
